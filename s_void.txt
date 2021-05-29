@@ -1,0 +1,45 @@
+*****************************************************************
+*	THIS IS MY OWN GUIDS FOR VOID LINUX AFTER INSTALLATION	*
+*	FEEL FREE TO USE, COPY AND SHARE			*
+*	BY: MUHAMMED HUSSAM					*	
+*****************************************************************
+
+
+1 - install:
+	xbps-install xtool mpv youtube-dl xorg
+
+2 - use doas as defult:
+	sudo xbps-install opendoas
+	sudo touch /etc/doas.conf
+	vim ->	(etc/doas.conf)			<-	"permit nopass keepenv :wheel"
+	vim ->	(/etc/xbps.d/ignore-90.conf)	<-	"ignorepkg= sudo"
+	doas xbps-remove sudo
+
+3 -dwm :
+	xbps-install -S base-devel libX11-devel libXft-devel libXinerama-devel
+	xbps-install -S git
+	git clone https://git.suckless.org/dwm
+
+4 - lunch dwm:
+	touch .xinitrc 
+	vim	->	(~/.xinitrc)	<-	"exec dwm"
+	vim	->	(~/.bashrc) 	<-	"startx"
+
+5 - start dwm:
+	vim	->	(~/bash_profile)<- 
+		if [ ! $DISPLAY ]; then
+  			exec startx
+		fi 
+
+6 - change size of screen :
+	vim	->	(~/.xinitrc)	<-	"xrandr -s 1360x768 &&"	"exec dwm"
+
+7 - some hack to dwm:
+	nnn:
+		vim ->	(dwm/config.h) 
+			+ static const *nnncmd[] = {"st", "nnn", "-H", NULL};
+			+ {MODKEY,	XK_n,	spawn	{ .v = nnncmd } };
+	patch by git:
+		git apply PATCH-NAME.diff
+8 - link shell/program to /bin
+	ln -rs ORG-PRO SUB-PRO
